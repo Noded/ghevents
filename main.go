@@ -6,9 +6,18 @@ import (
 )
 
 func main() {
-	var URL string
-	fmt.Print("URL: ")
-	fmt.Scanln(&URL)
+	var URL string = "https://api.github.com/users/"
+	var name string
+	fmt.Print("User name : ")
+	fmt.Scanln(&name)
+	if len(name) == 0 {
+		fmt.Println("User name is empty")
+	}
+	var fullURL string = URL + name + "/events"
 
-	parser.GetGitActivity(&URL)
+	events, err := parser.GetGitActivity(fullURL)
+	if err != nil {
+		fmt.Println(err)
+	}
+	parser.PrintGitEvents(events)
 }
